@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h3>react-route</h3>
+    <p>解决多页react应用：当react页面跳转时，并不是真的跳转到一个新的url</p>
+    <p>react-route会给react应用提供一个前端路由系统，每一次react的跳转，实质是改变页面的component</p>
+    <p>react-route会给不同的compnent定义一个类url地址，每次触发点击或网址输入，并不会向后端发送请求，而是在前端load不同的组件</p>
+    <section>
+        <h3>基本内容和语法</h3>
+        <dl>
+            <dt>基本组成</dt>
+            <dd><ul>
+                <li>最外层标签hashrouter/browserrouter 用来包裹所有路由react-route相关的组件；并且只有一个子元素</li>
+                <li>Switch标签用来包裹所有定义了前端路径的route/redirect组件</li>
+                <li>redirect：默认的路由最外层路径</li>
+                <li>route：定义不同路径的组件</li>
+                <li>Link：用来跳转至目标组件的</li>
+            </ul></dd>
+            <dt>属性设置</dt>
+            <dd>exact path:定义路由组件的路径 exact path='/xxx/xxx(re statement)'</dd>
+            <dd>component={}：定义设定路径对应的组件内容</dd>
+            <dd>to:定义跳转的目标路径，用在link和redirect上，发送相关事件，就跳转至指定路径</dd>
+        </dl>
+    </section>
+</body>
+</html>

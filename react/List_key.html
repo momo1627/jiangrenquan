@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <main>
+        <h3>lists and key</h3>
+        <dl>
+            <dt>思想</dt>
+            <dd>将数组里的内容转化为reactDOM元素</dd>
+            <dd>array.map(item=>{return reactdom})使用map方法，将数组里的每一个元素作为reactdom的一部分：内容，属性等待</dd>
+            <dd>list可以应用所有html元素，不一定是li元素</dd>
+            <dd>list用于同一数组数据构成的html内容</dd>
+            <dd>jsx允许map，可以直接在return里写整体list语句</dd>
+            <dt>list组件</dt>
+            <dd>1.先定义单个list组件，返回li>{props.properties}</dd>
+            <dd>2.再定义整个list组件，返回ul>{list component}</dd>
+            <dd>3.1在组件中将数组数据使用map函数整体赋值给reactDOM，并保存在一个变量中返回</dd>
+            <dd>3.2在整体list组件中的map函数里，设置key和单个list组件的props.property=value</dd>
+            <dd>4.在整体list组件ReactDOM.render()时，设置props的值</dd>
+            <dd>当使用list组件时，key设置在整个list组件上，也就是return ul>component的组件上，而不是具体的单个list元素上</dd>
+            <dt>key</dt>
+            <dd>每一个list都要有一个独一无二的key属性</dd>
+            <dd>keys属性用来监视元素的增改删，是元素的身份属性</dd>
+            <dd>一般key的属性是id值，独一无二的字符串；即数组的元素是对象，并且每个对象都有id属性和不同的值</dd>
+            <dd>在一个整体里，list的key必须是唯一的，即兄弟元素唯一</dd>
+            <dd>在不同整体里list互不干涉，key不需要唯一，即key不需要全局唯一；可以使用相同的key值输出不同list</dd>
+            <dd>key的值是给react使用的，并不会应用在htmlDOM里</dd>
+        </dl>
+    </main>
+<div id="example"></div>
+<div id="example1"></div>
+<script type="text/babel">
+//先定义单独li组件，引用props.value作为内容
+function ListItems(props){
+    return (
+            <li>{props.value}</li>
+    )
+}
+//再定义整体li(ul)组件，引用props.numbers数组作为内容属性值
+function NumberList(props){
+    const numbers = props.numbers;
+    //将props.numbers即数据数组，使用map遍历，将numbers数组的每个元素，赋值给单个li组件，并且绑定key
+    const listItems = numbers.map((number)=>
+        <ListItems key={number.toString()} value={number} />
+    );
+    //返回整体ul>li元素
+    return (
+        <ul>{listItems}</ul>
+    )
+}
+//在渲染是引入外部数据numbers
+ReactDOM.render(
+    <NumberList numbers={[0,1,2,3,4]} />,
+    document.getElementById('example')
+
+)
+function Blog(props){
+    //使用相同data，生产两个不同的list整体
+    const sidebar = (
+        <ul>
+            {props.posts.map(post=>
+            //不同整体内部的兄弟item的key必须唯一
+                <li key={post.id}>
+                {post.title}
+                </li>
+            )}
+        </ul>
+    );
+    const content = props.posts.map((post)=>
+        <div key={post.id}>
+            <h3>{post.title}</h3>
+            <p>{post.content}</p></div>
+)   
+    return (
+        //两个整体互为兄弟元素，但个体item互不相干，所以key值可以相同
+        //同时输出两个相同内容不同html元素的list整体
+        <div>
+            {sidebar}
+            <hr/>
+            {content}
+        </div>
+    )
+}
+const posts = [
+    {id:1,title:'react',content:'component'},
+    {id:2,title:'jquery',content:'tool'}
+]
+ReactDOM.render(
+    <Blog posts={posts} />,
+    document.getElementById('example1')
+)
+</script>
+</body>
+
+</html>

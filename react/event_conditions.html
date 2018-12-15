@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Title</title>
+    <link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="example"></div>
+<div id="example1"></div>
+<main>
+    <section>
+        <h3>event</h3>
+        <dl>
+            <dt>语法特性</dt>
+            <dd>语法和js类似，但是没有eventhandler；在标签里直接给event赋值函数</dd>
+            <dd>onEvent={this.function_name}</dd>
+            <dd>事件名驼峰</dd>
+            <dd>必须使用event对象的preventDefault来阻止默认event，不能用return false</dd>
+            <dd>事件函数是定义在组件对象里的函数，class里除了定义意外，所有引用事件函数的情况，不论赋值还是bind，都要记得是this。组件对象也是对象</dd>
+            <dt>应用</dt>
+            <dd>event函数在组件里定义,常用来控制组件的state值</dd>
+            <dd>在render方法里最终返回ReactDOM标签里，设置event和内容</dd>
+            <dd>在constructor里必须给具体动作函数绑定组件对象的this即组件本身；this.method = this.method.bind(this)；</dd>
+            <dd>在方法里this.state()使用时，this并没有指向组件对象本身，所以要在constructor里将方法里的this用bind绑定组件对象本身</dd>
+            <dd>其他方法1，方法handleClick使用箭头函数，箭头函数的this直接指向上层函数，即组件本身</dd>
+            <dd>其他方法2，在reactDOM标签里赋值事件函数时，使用箭头函数(e)=>this.method(e),箭头函数不绑定this，这里的this继承上层函数也就是组件本身</dd>
+            <dd>通常使用构造器绑定，和方法1，属性初始化</dd>
+            <dt>高级内容</dt>
+            <dd>事件函数的其他参数</dd>
+            <dd>onEvent={(e)=this.method(para,e)}：回调函数</dd>
+            <dd>onEvent={this.method.bind(this,para)}绑定this;但是定义method时e，要放在para后面</dd>
+        </dl>
+    </section>
+    <section>
+        <h3>Conditional Rendering</h3>
+        <dl>
+            <dt>语法syntax</dt>
+            <dd>根据条件不同，在组件返回reactDOM元素时，返回不同的结果</dd>
+            <dt>组件函数</dt>
+            <dd>首先要const一个条件变量condition</dd>
+            <dd>组件函数里 condition = this.props.condition</dd>
+            <dd>组件函数里，condition1：return result1 condition2：return result2</dd>
+            <dd>组件函数里，根据reactdom.render()中，组件props属性赋值确定条件，return不同的reactDOM元素</dd>
+            <dt>组件对象</dt>
+            <dd>组件对象里 render(){const condition = this.state.condition}</dd>
+            <dd>组件对象里，一般根据state设置条件，return不同的reactDOM元素</dd>
+            <dd>组件对象里，在render(){conditions：results；return results}</dd>
+            <dd>组件对象里，条件是内部state设置的，不需要在render进dom时设置</dd>
+            <dt>条件语句</dt>
+            <dd>if</dd>
+            <dd>{Logic && reactDOM}:Logic true 则得到reactDOM 否则只得到到false</dd>
+            <dd>condition ? true result : false result 三元条件语句</dd>
+            <dt>不render</dt>
+            <dd>符合一定条件时，组件return null 即可不渲染该组件</dd>
+        </dl>
+    </section>
+</main>
+<script type="text/babel">
+class Toggle extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {isToggleOn:true};
+        this.handleClick = this.handleClick.bind(this)
+    }
+    handleClick(){
+        this.setState(mao => ({isToggleOn:!mao.isToggleOn}))
+    }
+    render(){
+        return(
+            <button onClick={this.handleClick}>
+            {this.state.isToggleOn? 'on' : 'off'}
+            </button>
+        )
+    }
+}
+ReactDOM.render(
+    <Toggle />,
+    document.getElementById('example')
+)
+function UserGreeting(props) {
+    return <h1>Welcome back!</h1>
+}
+function GuestGreeting(props){
+    return <h1>Please sign in.</h1>
+}
+function Greeting(props){
+    const isLoggedIn = props.isLoggedIn;
+    if(isLoggedIn){
+        return <UserGreeting />
+    }
+    return <GuestGreeting />
+}
+function LoginButton(props){
+    return (
+        <button onClick={props.onClick}>
+        Login
+        </button>
+    )
+}
+function LogoutButton(props){
+    return (
+        <button onClick={props.onClick}>
+        Logout
+        </button>
+    )
+}
+function WarningBanner(props){
+    if(!props.warn){
+        return null;
+    }
+    return (
+        <div>
+            warning!
+        </div>
+    )
+}
+class LoginControl extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            isLoggedIn:false,
+            showWarning:true
+        }
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+    }
+    handleLoginClick(){
+        //箭头函数可用来做true/false赋值 非常方便 state.name:!state.name每次变化true/false
+        this.setState(state=>({
+            isLoggedIn:!state.isLoggedIn,
+            showWarning:!state.showWarning
+        }))
+    }
+    
+    render(){
+        //设置props值为state，用来设置greeting的isloggin属性
+        const isLoggedIn = this.state.isLoggedIn;
+        //button 最终输出的element
+        let button;
+        if (isLoggedIn){
+            button = <LogoutButton onClick={this.handleLoginClick} />
+        } else {
+            button = <LoginButton onClick={this.handleLoginClick} />
+        }
+        return (
+            //greeting组件的props.isloggedin的值是当前loginconrol组件state.isloggedin的值，嵌套组件
+            <div>
+                <Greeting isLoggedIn={isLoggedIn} />
+                <WarningBanner warn={this.state.showWarning} />
+                {button}
+            </div>
+        )
+    }
+}
+ReactDOM.render(
+    <LoginControl />,
+    document.getElementById('example1')
+)
+
+</script>
+</body>
+
+</html>

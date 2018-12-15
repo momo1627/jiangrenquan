@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <main>
+        <h1>react Form</h1>
+        <section>
+            <h3>基本语法</h3>
+            <p>使用react组件控制input的event过程</p>
+            <ul>
+                <li>使用onChange=event获取input的value</li>
+                <li>用获取的input.value作为组件的state</li>
+                <li>再给input的value属性赋值对应的this.state</li>
+                <li>不同type可能赋值不同的属性，例如checked</li>
+                <li>使用e.preventDefault()阻止默认动作</li>
+            </ul>
+        </section>
+    </main>
+    <div id="index"></div>
+<script type="text/babel">
+
+
+
+// function parseDuration(ms){
+//     const seconds = Math.floor(ms/1000);
+//     const minutes = Math.floor(seconds/60);
+//     return {seconds,minutes}
+// }
+// function padLeft(number){
+//     if(number<10){
+//         return `0${number}`
+//     }
+//     return `${number}`
+// }
+// class StopWatch extends React.Component{
+//     constructor(){
+//         super();
+//         this.state = {
+//             duration:0,
+//             isRunning:false
+//         }
+//     }
+//     handleStart = () =>{
+//         this.setState({duration:0,isRunning:true})
+//         this.timer = setInterval(()=>{
+//             const newDuration = this.state.duration+1000;
+//             this.setState({duration:newDuration})
+//         },1000)
+//     }
+//     handleStop = () => {
+//         if(this.timer){
+//             clearInterval(this.timer)
+//             this.setState({isRunning:false})
+//         }
+//     }
+//     render(){
+//         const {seconds,minutes} = parseDuration(this.state.duration)
+//         return(
+//            <div>
+//              <h2>{padLeft(minutes)}:{padLeft(seconds)}  </h2>
+//              <button onClick={this.handleStart} disabled={this.state.isRunning}>Start</button>
+//              <button onClick={this.handleStop} style={{marginLeft:20}}>Stop</button>
+//            </div> 
+//         )
+//     }
+// }
+// class Superman extends React.Component{
+//     constructor(props){
+//         super(props);
+//         this.state = {
+//             superheroes:['batman','superman','spiderman']
+//         }
+//     }
+//     render(){
+//         return(
+//             <div>
+//                 {this.state.superheroes.map(hero=>{return <h3 key={hero.toString()}>{hero}</h3>})}
+//             </div>
+//         )
+//     }
+// }
+// class App extends React.Component{
+//     constructor(){
+//         super();
+//         this.state={
+//             username:'',
+//             email:'',
+//             city:''
+//         }
+//     }
+//     handleUsernameChange = (e) => {
+//         this.setState({username:e.target.value})
+//     }
+//     handleEmailChange = (e) => {
+//         this.setState({email:e.target.value})
+//     }
+//     handleCityChange = (e) => {
+//         this.setState({city:e.target.value})
+//     }
+//     handleFieldChange(e){
+//         this.setState({
+//             [e.target.name]:e.target.value
+//         })
+//     }
+//     handleSubmit = (e) => {
+//         e.preventDefault();
+//         console.log('submitted')
+//         console.log(this.state)
+//     }
+//     render(){
+//         return(
+//             <form onSubmit={this.handleSubmit} action="" style={{width:300,margin:20}}>
+//               <div className='form-group'>
+//                 <label htmlFor="username">Username</label>
+//                 <input value={this.state.username} onChange={this.handleUsernameChange} type="text" className='form-control' id='username' placeholder='Username' />
+//               </div>  
+//               <div className='form-group'>
+//                 <label htmlFor="email">Email</label>
+//                 <input value={this.state.email} onChange={this.handleEmailChange} type="email" className='form-control' id='email' placeholder='Email' />
+//               </div> 
+//               <div className='form-group'>
+//                 <label htmlFor="city">City</label>
+//                 <select value={this.state.city} onChange={this.handleCityChange} name="city" id="city" className='form-control'>
+//                   <option value="Sydney">Sydney</option>
+//                   <option value="MelBourne">MelBourne</option>
+//                   <option value="Brisbane">Brisbane</option>
+//                 </select>
+//               </div> 
+//               <div>
+//                 <input type="submit" />  
+//               </div>
+//             </form>
+//         )
+//     }
+// }
+
+        //     const listitems = this.state.items;
+        //     const ids = listitems.keys()
+        //     const elements  = listitems.map((listitem)=>{ 
+        //     return (
+        //       <div key={ids.next().value}>{listitem.task} 
+        //         <input type="checkbox" checked={this.state.items.completed} onChange={this.handleCheck} /> 
+        //         <button>{'complete:' + listitem.completed}</button>
+        //         <button>delete</button>    
+        //       </div>
+        //     )
+        // })
+class Item extends React.Component{
+    constructor(){
+        super();
+        this.state={
+            isDeleted:false,
+            isCompleted:false
+        }
+    }
+    handleDelete = ()=>{
+        this.setState({isDeleted:true})
+    }
+    handleCheck = () =>{
+        this.setState((state)=>({isCompleted:!state.isCompleted}))
+    }
+    render(){
+        if(this.state.isDeleted){
+            return null;
+        }
+        return(
+          <div className={this.state.isCompleted ? 'completed':'pending'}>{this.props.item.task}
+            <input type="checkbox" checked={this.state.isCompleted} onChange={this.handleCheck} /> 
+            <button onClick={this.handleDelete}>delete</button>   
+          </div>
+        )
+    }
+}
+class ListItems extends React.Component{
+    constructor(){
+        super();
+        // this.state={
+        //     items:['hahah']
+        // }
+    }
+    render(){
+        const listitems = this.props.items;
+        const ids = listitems.keys();
+        const element = listitems.map((listitem)=>{return(<Item key={ids.next().value} item={listitem} />)})
+        return(
+          <div>
+              {element}
+          </div>
+        )
+    }
+}
+class TaskManagement extends React.Component{
+    constructor(){
+        super();
+        this.state = {
+            filter:'all',
+            newItem:'',
+            items:[
+                {
+                    task:'exercise',
+                    isCompleted:false,
+                },
+                {
+                    task:'learning React',
+                    isCompleted:false,
+                }
+            ]
+        }
+    }
+    function(content){
+        
+    }
+    handleCheck = (e) => {
+        const index = e.target.value;
+        const items = this.state.items;
+        items[index].isCompleted = !items[index].isCompleted
+        this.setState({
+            items:items
+        })
+    }
+    handleDelete = (e) => {
+        var newitems;
+        const index = e.target.value;
+        const items = this.state.items;
+        if(index === 0){
+            items.shift();
+            newitems = items;
+        } else{
+            newitems = items.slice(0,index).concat(items.slice(index+1))
+        }
+        this.setState({items:newitems})
+    }
+    handleSubmit = (e) => {
+        if(this.state.newItem === ''){
+            alert('please enter a task');
+            return false
+    }
+        const x = { 
+            task:this.state.newItem,
+            isCompleted:false,
+        }
+        const oldItems = this.state.items;
+        oldItems.unshift(x);
+        this.setState({items:oldItems,newItem:''})
+
+    }
+    handleInput = (e) => {
+        const value = e.target.value;
+        this.setState({
+            newItem:value
+        })
+    }
+    handleFilter = (e) => {
+        const name = e.target.name
+        const value = e.target.checked && e.target.value;
+        this.setState({
+            [name]:value
+        })
+        const items = this.state.items;
+        if(this.state.filter === 'pending'){
+            var pendingItems = [];
+            for(var i of items){
+                if(i.isCompleted === false){
+                    pendingItems.push(i)
+                }
+            }
+            this.setState({pendingItems:pendingItems})
+        } else if(this.state.filter === 'completed'){
+            var completedItems = [];
+            for(var i of items){
+                if(i.isCompleted === true){
+                    completedItems.push(i)
+                }
+            }
+            this.setState({completedItems:completedItems})
+        }       
+    }
+    
+    render(){
+        var listitems = [];
+        const items = this.state.items;
+        if(this.state.filter === 'pending'){
+            var pendingItems = [];
+            for(var i of items){
+                if(i.isCompleted === false){
+                    pendingItems.push(i)
+                }
+            }
+            listitems = pendingItems;
+        } else if(this.state.filter === 'completed'){
+            var completedItems = [];
+            for(var i of items){
+                if(i.isCompleted === true){
+                    completedItems.push(i)
+                }
+            }
+            listitems = completedItems
+        } else {
+           listitems= this.state.items;            
+        }
+        
+        const ids = listitems.keys();
+        const element = listitems.map((listitem,index)=>{return(
+        <div className={listitem.isCompleted ? 'completed':'pending'} key={ids.next().value}>{listitem.task}
+            <input type="checkbox" checked={listitem.isCompleted} onChange={this.handleCheck} value={index}/> 
+            <button onClick={this.handleDelete} value={listitem.task} value={index}>delete</button>   
+        </div>
+        )})
+        return(
+          <div>
+            <h1>to do list</h1>
+            <form action="" >
+              <input type="text" placeholder='please enter next todo:' value={this.state.newItem} onChange={this.handleInput} />  
+              <input type="button" value='add an item' onClick={this.handleSubmit} />
+            </form>
+            <form action="">
+              <input type="radio" name='filter' value='all' checked={this.state.filter==='all'} onChange={this.handleFilter} />All
+              <input type="radio" name='filter' value='pending' checked={this.state.filter==='pending'} onChange={this.handleFilter} />Pending
+              <input type="radio" name='filter' value='completed'  checked={this.state.filter==='completed'} onChange={this.handleFilter} />Completed
+            </form>  
+            {element}
+          </div>
+        )
+    }
+}
+ReactDOM.render(
+    <TaskManagement />,
+    document.getElementById('index')
+
+)
+    
+</script>
+</body>
+
+</html>

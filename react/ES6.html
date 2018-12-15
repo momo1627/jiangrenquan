@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<main>
+    <section>
+        <h3>箭头函数</h3>
+        <dl>
+            <dt>基础语法</dt>
+            <dd>(para1,para2..)=>{return statement}</dd>
+            <dd>只有1个参数可以省略括号：para=>{return statement}</dd>
+            <dd>没有参数使用括号：()=>{return statement}</dd>
+            <dd>简化模式:表达式的花括号和return都可以省略；但是有花括号必须有return，多个参数必须有圆括号</dd>
+            <dt>高级语法</dt>
+            <dd>返回对象要用圆括号包裹：(para)=>({xx:yy})</dd>
+            <dd>支持rest:(para1,..rest)=>{statement}</dd>
+            <dd>支持默认参数:(para1=value1,..)=>{statement}</dd>
+            <dd>参数支持列表解构赋值</dd>
+            <dt>特性</dt>
+            <dd>不绑定this，所以不能用作构造函数，对象方法</dd>
+            <dd>继承上层函数this，可以作为方法和构造函数的内容函数</dd>
+            <dd>所以主要用于简化编写内容，作为回调函数为主要应用</dd>
+
+        </dl>
+    </section>
+    <section>
+        <h3>dynamic key</h3>
+        <p>给对象设置动态的key</p>
+        <p>dynamic key可以是计算的值，动态的被赋值,使用中括号包裹</p>
+        <p>const animals = {
+            [`animal${choesenAnimal}`]:true;
+        </p>
+    </section>
+    <section>
+        <h3>iterator/for of</h3>
+        <p>iterator思想：创建一个指针对象，指向当前数据起始位置，定义一个指针对象方法next，没调用一次，指针对象指向数据下一个位置，当指向数据结束为止时停止</p>
+        <p>当一个数据有symbol.iteractor属性，即为可遍历对象，可以使用for of语句遍历数据</p>
+        <p>原声具有symbol.iteractor的数据：array/map/set/string/typedarray/arguments/nodelist;</p>
+        <p>自定义数据也可自行在symbol.iteractor上定义遍历方法，成为可遍历数据</p>
+        <p>遍历器应用：
+            <ul>
+                <li>对数组和set解构赋值时：let [x,y] = set</li>
+                <li>扩展运算符... var str = 'abc';[...str]//['a','b','c']:将iterator数据，遍历生产一个数组：常用与使用一个数组的每个元素</li>
+                <li>generator</li>
+            </ul>
+        </p>
+        <p>for of 遍历iterator的键值：不能遍历对象</p>
+        <p>for of 可以使用break 和 return 跳出遍历</p>
+        <p>for of 主要为数组设计，而for in 为对象设计</p>
+    </section>
+    <section>
+        <h3>generator/async</h3>
+        <dl>
+                    <dt>generator</dt>
+                    <dd>generator就是使用函数方法创建一个iterator指针对象，将数据内容封装进函数内部。在外部环境调用函数的next()方法，访问函数内部数据</dd>
+                    <dd>generator的yield就是指针指向的位置，函数内部语句执行遇到yield就停止，再次调用next，函数语句从上一个yield之后执行到下一个yield停止</dd>
+                    <dd>generator.next()的返回值的value就是每次停止时yield的语句，done：false；不调用next()不会执行yield语句</dd>
+                    <dd>generator里的return就是指针的done，每次遇到return就执行语句，并停止指针指向，结束遍历器，返回value:undified,done:true</dt>
+                    <dd>每个generator只能由一个return，但每个generator可以有n个yield</dd>
+                    <dd>不能在普通函数使用yield，并且也不能作为有些原生方法的回调函数；嵌套在其他表达式时，要使用(yield statement)</dd>
+                    <dd>generator的优势：可以定义更复杂的数据，异步编程</dd>
+                    <dt>next()</dt>
+                    <dd>next(para),next方法的参数para会改变，generator上一次指向的yield表达语句的值，如果内部yield之后的语句使用了上一个yield语句的结果，那么接下来的的yield的值就会根据传入参数改变</dd>
+                    <dd>next(para)相当于将上一个yield语句替换为一个值，参数para</dd>
+                    <dt>return(para)</dt>
+                    <dd>调用generator.return(para)会结束generator并且将value赋值为return的参数，相当于将yield表达式替换成return语句</dd>
+                    <dt>throw()</dt>
+                    <dd>将yield表达式，替换为throw语句，抛出一个错误</dd>
+                    <dt>for of</dt>
+                    <dd>遍历器接口for (let x of generator()){ f(x) } 会遍历generator所有 return语句之前的yield语句的值</dd>
+                    <dd>其他遍历器接口[...generator()],解构赋值[x,y]=generator()都会有和for of 一样的功能</dd>
+                    <dt>yield*</dt>
+                    <dd>yield* generator(),在generator中调用另一个generator，等同于将内部generator所有yield语句嵌入到当前generator语句中</dd>
+                    <dd>如果yield*后的generator没有return则语句相当于for of 遍历，如果有return语句 则 yield* gen返回return后的value</dd>
+                    <dd>yield* 后面语句可以是任何iterator对象，yield* 相当于for of 语句 遍历所有iterator对象的数据</dd>
+                    <dt>作为对象属性的generator</dt>
+                    <dd>* name(){}/name:function* (){}</dd>
+                    <dt>generator与状态机</dt>
+                    <dd>generator的yield嵌套在循环中，可实现多种功能的代码简化</dd>
+        </dl>
+        
+    </section>
+</main>
+<script>
+    var clock = function* (){
+        while(true){
+            console.log('tick');
+            yield;
+            console.log('tock');
+            yield;
+        }
+    }
+    
+</script>
+</body>
+</html>

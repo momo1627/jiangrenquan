@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="moment.js"></script>
+    <script src="moment-timezone-with-data.js"></script>
+    <script src="moment-timezone-with-data-2012-2022.js" ></script>
+    <title>Title</title>
+    <link rel="stylesheet" href="practice.css">
+</head>
+<body>
+<div id="example"></div>
+<div id="example1"></div>
+<div id="example2"></div>
+
+<script type="text/babel">
+// class Welcome extends React.Component{
+//     render(){
+//         return <h1>hello,{this.props.name}</h1>
+//     }
+// }
+// class Mates extends React.Component{
+//     render(){
+//         return(
+//             <div>
+//                 <Welcome name={'daniel'}/>
+//                 <Welcome name={'peter'}/>
+//                 <Welcome name={'yin'}/>
+//             </div>
+//         )
+//     }
+// }
+// ReactDOM.render(
+//     <Mates />,
+//     document.getElementById('example')
+// );
+    class Plan extends React.Component{
+        render(){
+            return(
+                <div className='card'>
+                    <Head head={this.props.head}/>
+                    <Content content={this.props.content} />
+                    <Select/>
+                </div>
+            )
+        }
+    }
+    class Content extends React.Component{
+        render(){
+            return (
+                <ul>
+                    <li>{this.props.content.detail[0]}</li>
+                    <li>{this.props.content.detail[1]}</li>
+                    <li>{this.props.content.detail[2]}</li>
+                </ul>
+            )
+        }
+    }
+    class Head extends React.Component{
+        render(){
+            return (
+                <div className='card_head' style={{backgroundColor:this.props.head.color}}>
+                    <h3 className='title'>{this.props.head.title}</h3>
+                    <p className='des'>{this.props.head.description}</p>
+                </div>
+            )
+        }
+    }
+    class Select extends React.Component{
+        render(){
+            return <div className='select'>Select plan</div>
+        }
+
+    }
+    const user1 = {
+    head:{
+        title:'Career',
+        description:'Get hired and get ahead',
+        color:'#2b7b1e'
+    },
+    content:{
+        detail:['Stand out and get in touch with hiring manager','See how you compare to other applicants','Learn new skills to advance your career']
+    }
+
+
+};
+
+class Clock extends React.Component{
+    constructor(props){
+        super(props);
+        //给state定义一个数据接口
+        this.state = {
+            time:new Date()
+        }
+    }
+    //组件添加到dom前调用的函数
+    // componentWillMount(){
+    //     alert(this.state.time)
+    // }
+    //组件添加到dom后调用的函数，DidMount后进入running阶段
+    componentDidMount(){
+        this.timeID = setInterval(
+            ()=>this.tick()
+            ,1000)
+    }
+    //running后只有state的数据在更新
+    //设置组件是否可以更新
+    // shouldComponentUpdate(){return true}
+    //组件更新前可调用函数
+    // componentWillUpdate(){console.log   (this.state.time)}
+    //组件更新后可调用函数
+    // componentDidUpdate(){console.log    (this.state.time)}
+    componentWillUnmount(){
+        clearInterval(this.timeID)
+    }
+    tick(){
+        this.setState(
+            //更新state值
+            {
+                time:new Date()
+            } //和state数据类型一致
+        // {property:{...this.state.property,newProperty}}
+        )
+    }
+    render(){
+        //const {time} = this.state;
+        // 从state里提取出需要的属性；使用destructuring{property1,property2}=this.state赋值给同名变量，变量将会在vdom里调用
+        return <div>{this.state.time.toLocaleTimeString()}</div>
+        // return <div>{new Date().toLocaleDateString()}</div>
+    }
+}
+function addZero(i) {
+    if (i < 10) {
+        i = "0" + i;
+    }
+    return i;
+}
+class CurrentDate extends Clock{
+    render(){
+        return <div>{addZero(this.state.time.toLocaleDateString())}</div>
+    }
+}
+class Seconds extends  Clock{
+    render(){
+        return <div className="second box">{addZero(this.state.time.getSeconds())}</div>
+    }
+}
+class Minutes extends  Clock{
+    render(){
+        return <div className="minute box">{addZero(this.state.time.getMinutes())}</div>
+    }
+}
+class Hours extends  Clock{
+    render(){
+        return <div className="hour box">{addZero(this.state.time.getHours())}</div>
+    }
+}
+
+ReactDOM.render(
+    <div className="clock_container">
+        <div className="date_container">
+            <CurrentDate/>
+        </div>
+        <div className="time_container">
+            <Hours/>
+            <div>:</div>
+            <Minutes/>
+            <div>:</div>
+            <Seconds/>
+
+        </div>
+
+    </div>
+    ,
+    document.getElementById('example1')
+)
+class WorldClock extends Clock{
+    zoneName(name){
+        switch (name.toLowerCase()) {
+            case 'sydney':
+                return 'Australia/Sydney';
+            case 'new york':
+                return 'America/New_York';
+            case 'seoul':
+                return 'Asia/Seoul';
+            case 'london':
+                return 'Europe/London'
+        }
+    }
+
+    render(){
+        return <div>{this.props.city + ' time is ' + moment.tz(this.state.time,this.zoneName(this.props.city)
+        ).format()}</div>
+    }
+}
+ReactDOM.render(
+    <div>
+        <WorldClock city={'sydney'}/>
+        <WorldClock city={'new york'}/>
+        <WorldClock city={'london'}/>
+        <WorldClock city={'seoul'}/>
+    </div>,
+    document.getElementById('example2')
+)
+
+</script>
+</body>
+
+</html>

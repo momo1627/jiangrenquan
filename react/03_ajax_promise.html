@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <h1>callback</h1>
+    </section>
+    <section>
+        <h1>Ajax</h1>
+    </section>
+    <section>
+        <h1>Promise</h1>
+        <dl>
+            <dt>promise</dt>
+            <dd>
+                <ul>
+                    <li>pm = new Promise(function(resolve,reject){}):创建promise对象，初始化一个异步执行函数定义主进程的执行过程；resolve,reject是回调函数，分别在主进程成功和失败时调用</li>
+                    <li>pm.then(resolve(){})：promise对象.then()的参数是回调函数resolve函数，即定义主进程成功后，如何处理结果</li>
+                    <li>pm.catch(reject(){}): promise对象.catch()的参数是回调函数reject函数，即定义主进程成功后，如何处理结果</li>
+                    <li>pm.then()就是给pm定义成功后的处理过程，pm.catch就是给pm定义失败后的处理过程，他们最后都返回更新的pm即promise对象</li>
+                </ul>
+            </dd>
+            <dd>promise对象并不是任何值，promise的输出结果依赖then和catch的回调函数所定义的输出结果，即then和catch定义如何输出创建promise对象时所定义主进程的结果</dd>
+            <dt>chainPromises</dt>
+            <dd>promise.then(return {promise}).then(return {next promise})....then(return {not promise})</dd>
+            <dd>promise.then()给promise对象绑定一个新的对象，即每一次成功都返回一个新的promise对象，再给新的promise对象绑定</dd>
+            <dd>依赖上一步promise的结果，即必须每一步都成功才能进行下去</dd>
+            <dt>Ajax Promise</dt>
+            <dd>很多js库将Promise应用在ajax上，减少回调函数</dd>
+            <dt>axios库</dt>
+            <dd>axios将AJAX，promise结合起来，并自动解析JSON数据，为异步获取api提供便捷方法的库</dd>
+            <dt>axio.api</dt>
+            <dd><ul>
+                <li>axios(config).then().catch();config= {method:'',url:'',data:'',baseURL:default,headers:default}</li>
+                <li>axios.method(url[,config(data)];method:get/post/request/delete/head/option/put/patch/send(default)</li>
+                <li>response:{data:'',status:200,statusText:'',header:{},config:{}.request:{}}:axios.get(url).then(function(response){return response.data/status...})</li>
+            </ul></dd>
+            <dt>wrap axios:</dt>
+            <dd>axio的promise结果，作为上层对象的某个方法的返回值，即包裹一层逻辑性强的api</dd>
+            <dd>ownApi = { ownMethod:function(para){return new Promise}}</dd>
+            <dt>async</dt>
+            <dd>async function(){}：同步化异步过程</dd>
+            <dd>statement:{await 一个异步结果 并赋值给变量}</dd>
+            <dd>可以await async function 也可以 await 一个 promise 但必须在async函数里</dd>
+
+        </dl>
+    </section>
+    <p>clean code：书籍</p>
+    <p>c#</p>
+    <p>acloud.guru</p>
+    <script>
+        
+</script>
+</body>
+</html>

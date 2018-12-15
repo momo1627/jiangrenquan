@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <h1>异步与generator异步应用</h1>
+    <p>异步：任务执行不是连续的，主程序执行时，会等待另一个程序执行的结果，才能继续执行</p>
+    <p>异步实现：js回调函数；promise/then/catch；generator</p>
+    <dl>
+        <dt>异步编程的解决方案：协程coroutine</dt>
+        <dd>1.协程A开始执行2.执行到一半暂停，执行权交给协程B;3.一段时间后协程B交还给协程A;4.协程A继续执行</dd>
+        <dt>generator实现协程</dt>
+        <dd>整个generator函数就是封装的异步任务，yield来暂停异步</dd>
+        <dd>function* asyncJob() {statements;var f = yield readfile(fileA); statements}</dd>
+        <dd>代码执行到yield就暂停，等到yield语句执行完毕，执行权交还主程序，继续向后执行</dd>
+        <dd>代码非常向普通函数，除了yield，yield就是异步的关键</dd>
+        <dd>yield将任务分段，generator指针对象，每次都从上一个yield指向下一个yield即一段一段指向</dd>
+        <dd>next()作用即分段执行Generator函数</dd>
+        <dt>函数内外数据交换</dt>
+        <dd>next()可以返回generator的value属性，向外输出数据；next(para)也可以通过参数，替代上一个yield结果，向函数内部输入数据</dd>
+        <dd>throw()可以向函数内部输入错误处理，函数内部使用try...catch捕获错误</dd>
+        <dt>异步任务的封装</dt>
+        <ul>
+            <li>在generator里 yield request并将结果赋值给result</li>
+            <li>在外部环境调用generator.next()并保存至变量,result;result大部分情况可能是保存了promise对象(很多包都是输出promise对象)</li>
+            <li>在then里定义结果处理</li>
+            <li>在then里调用next()继续执行下一段代码</li>
+        </ul>
+        <dt>async</dt>
+        <dd>generator的语法糖，更好的编写异步</dd>
+        <dd>async替换*；await替换yield</dd>
+        <dd>1.内置执行器，调用async函数 function()会直接输出结果；不用再调用next</dd>
+        <dd>2.语义明显asyncb表示有异步操作，await表示其之后表达式需要等待结果</dd>
+        <dd>3.await后面可以是Promise对象和原生数据类型的值</dd>
+        <dd>4.async返回一个promise对象，方便用then进行下一步操作，而不是一个iterator</dd>
+        <dt>基本用法</dt>
+        <dd>可以作为普通函数，对象方法，可以使用class，箭头函数</dd>
+        <dt>语法</dt>
+        <dd>async函数，返回一个promise对象</dd>
+        <dd>async函数return返回的值，成为这个promise对象.then()方法的参数</dd>
+        <dd>async函数内部throw new Error，会被promise对象的.catch方法接收</dd>
+        <dt>async执行逻辑</dt>
+        <dd>async函数内部有await语句，即有异步操作，则async函数必须等到await语句的promise对象执行完(异步操作完)，才会改变函数生成的promise执行then或catch里的回调函数</dd>
+        <dt>await命令</dt>
+        <dd>当await后是普通值是，await相当于return</dd>
+        <dd>当await后是promise，如果该promise是reject，则async函数也会立即结束，执行catch，不能再继续下去</dd>
+        <dd>如果不想await异步的结果影响整个async函数，则将这个await放入try...catch语句</dd>
+        <dd>另一种方法是在await后面的promise必须定义好catch方法，只要错误被处理，就会继续执行</dd>
+        <dd>try catch可以重复使用，也可将所有await放入一个try里</dd>
+        <dt>应用注意</dt>
+        <dd><ul>
+            <li>await后面promise一定要错误处理：两种方法</li>
+            <li>多个独立异步操作最好让他们同时触发：let[var1,var2,var3...]=await Promise.all([async1(),async2(),async3()...])</li>
+            <li>await只能用在async函数里，不能做普通函数，对象方法，回调函数参数</li>
+        </ul></dd>
+        <dt>async原理</dt>
+        <dd>
+            <ul>
+                <li>一个普通函数返回一个执行函数</li>
+                <li>执行函数参数是一个generator的函数</li>
+                <li>执行函数里返回一个promise对象</li>
+                <li>promise对象的then()处理generator的.next()</li>
+                <li>promise.then()每次执行一段generator里的yield，返回一次值</li>
+            </ul>
+        </dd>
+
+
+    </dl>
+    <script>
+        
+</script>
+</body>
+</html>

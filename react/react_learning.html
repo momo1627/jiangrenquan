@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<dl>
+    <dt>核心理念</dt>
+    <dd>函数式构建HTML元素，数据驱动HTML内容样式，组件化构建HTML页面</dd>
+    <dt>JSX语法</dt>
+    <dd>JSX语法将js和html混写，将html元素融入js语句中，实现函数化html，将js变量语句插入html标签中，实现数据驱动html内容；两种形式互相融合</dd>
+    <dd>JSX中，<>用html规则解析；{}中的内容用JS规则解析</dd>
+    <dt>Render()</dt>
+    <dd>React基本方法：将JSX语法写出的VDOM转化成HTML语言，插入HTML页面中</dd>
+    <dt>组件化：react核心</dt>
+    <dd>使用JSX语法构建了HTML页面的组件类（函数或对象的方法），将他插入VDOM标签时，自动生成一个组件类实例，也就是一个函数化的组件；使用render插入HTML页面中，即在HTML中成为一个组件；组件类名必须首字母大写</dd>
+    <dt>组件化的数据驱动：props</dt>
+    <dd>组件构建时引用props对象参数；应用VDOM模板即组件类实例时，props对象参数的不同属性赋值在组件标签里，即可实现组件数据化驱动；</dd>
+    <dt>this.props.children属性</dt>
+    <dt>PropTypes:组件属性参数验证</dt>
+    <dt>DOM diff</dt>
+    <dd>react组件不是真是DOM，而是存在内存中的Virtual DOM。只有render入HTML后，才会变成真DOM；React中，所有HTML的变动，先发生在VDOM中，然后将变化的部分，而不是新的DOM，反应在真是的DOM中，避免重新渲染页面，极大提高页面性能</dd>
+    <dt>ref属性：获取真实DOM</dt>
+    <dt>组件事件</dt>
+</dl>
+<h3>JSX 语法</h3>
+<ul>
+<li>使用const声明变量为常量不可变</li>
+<li>语句中可用html标签，{JS语句}混写，定义vdom模板;html除了标签名，所有内容和属性都可以引用{js语句},但是属性值不再用‘’</li>
+<li>vdom的属性名更偏向js，所以className代替class</li>
+<li>vdom可以有子元素</li>
+<li>使用render(,)转化vdom至dom</li>
+<li>render(vdom,dom):render的第一个参数，必须是vdom，为所谓他的形式，可以是直接的标签加js语句，可以是保存了vdom的变量，可以是返回vdom的函数调用，可以是vdom标签，但是常用的是vdom标签</li>
+</ul>
+<h3>component</h3>
+<dl>
+    <dt>组件函数化</dt>
+    <dd>react的组件和js的函数有类似的特征：重复调用，参数驱动；react组件已\<Componet />形式调用</dd>
+    <dt>组件定义两种方法</dt>
+    <dd>第一种：函数定义法 function Name(props){return html+js};props是参数对象</dd>
+    <dd>第二种：组件类实例化：class Name extends React.Component{render(){return html+js}}:引用参数注意，props用法是：this.props.property</dd>
+    <dt>组件的调用</dt>
+    <dd>Vdom形式：类HTML标签：\<\Name property="" property=\{}\/\></dd>
+    <dd>组件内部可以调用其他组件，类似函数内部调用其他函数</dd>
+    <dt>组件转化为node</dt>
+    <dd>使用ReactDOM.render(vdom,node):render一般只调用一次</dd>
+    <dt>注意问题</dt>
+    <dd>组件名首字母大写；</dd>
+    <dd>组件只有唯一一个顶部标签，顶部标签没有统计标签</dd>
+    <dd>组件返回多行标签用()包裹</dd>
+    <dt>组件思想</dt>
+    <dd>细化组件，尽量将组件拆分成小组件，灵活应用</dd>
+    <dd>组件嵌套时，内部组件可以使用上层组件设置的state或props作为props，但是这个组件并不知道使用的是state还是props</dd>
+    <dd>使用class定义组件，在constructor方法里定义组件的props/state/eventbind；在render方法里return返回ReactDOM和内容</dd>
+</dl>
+<h3>state</h3>
+<dl>
+    <dd>state对象在constructor里定义this.state={}</dd>
+    <dd>改变state只能使用setState()方法，而不能直接赋值；this.setState()</dd>
+    <dd>尽量使用箭头函数的结果赋值state，因为state和props可能会异步执行，不能依赖他们的直接结果</dd>
+    <dd>state可以作为属性值赋值给组件props属性</dd>
+</dl>
+<h3>component lifecycle</h3>
+<dl>
+    <dt>lifecycle</dt>
+    <dd>初始化：constructor->componentWillMount->render->componentDidMount->running</dd>
+    <dd>组件dom后：running->states change->shouldComponentUpdate->componentWillUpdate->render->componentDidUpdate</dd>
+    <dd>组件state停止：running->unmount->componentWillUnmount->end</dd>
+    <dd>三个过程，分隔开来，互不影响</dd>
+    <dd>在不同过程中，设置不同的state值，让组件自动更新</dd>
+</dl>
+<h3>list</h3>
+<dl>
+    <dt>循环多个list</dt>
+    <dd>使用array.map(html+js)定义多个vdom</dd>
+    <dt>list key</dt>
+    <dd>每一个子元素必须有唯一的key值，一般是string</dd>
+</dl>
+
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Components</title>
+</head>
+<body>
+    <h1>react组件</h1>
+    <p>组件使html页面的内容独立，可重用</p>
+    <p>组件就像函数或者对象一样，根据外部props参数或者内部state属性，改变reactElement在dom的输出</p>
+    <section>
+        <h1>组件用法规则</h1>
+        <ul>
+            <li>命名首字母大写</li>
+            <li>组件输出为类似html元素，参数调用类似元素属性赋值</li>
+            <li>props是组件的属性参数对象</li>
+            <li>组件输出可以调用其他组件，也就是组件的嵌套</li>
+            <li>组件化思想，尽可能的将元素分成相互不影响的很多个小组件</li>
+            <li>props和state也随着嵌套向下嵌套</li>
+        </ul>
+        <h1>函数式组件</h1>
+        <p>当组件不需要自动更新时，使用函数式组件，组件根据外部参数props输出</p>
+        <p>函数化即一个函数return一个reactElement,并且reactElement根据props.property改变</p>
+        <p>函数组件内部可以定义事件函数，让reactElement引用</p>
+        </section>
+        
+    <section>
+        <h1>对象化组件</h1>
+        <p>当组件需要有条件更新输出时，使用对象式组件，组件既可以根据props输出，又根据state输出</p>
+        <p>对象化组件，使用class继承与React.Component,也可以继承其他组件</p>
+        <p>新的组件在contructor(props){}方法里，
+            <ul>
+                <li>super(props)继承父级参数属性</li>
+                <li>this.props.newproperty引用自身参数</li>
+                <li>this.state={}定义自身state属性;不要给state设置引用props的属性</li>
+                <li>this.event=this.event.bind(this),事件绑定自身this</li>
+            </ul>
+        </p>
+        <p>新的组件可以声明自身的方法，在对象内部使用</p>
+        <p>对象最近可以根据不同lifestyle，设置不同的state值setState({})</p>
+        <p>对象组件使用render(){...return(...)}方法，输出最终的reactElement</p>
+        <h3>lifecycle</h3>
+        <ol>
+            <li>initial</li>
+            <li>constructor()</li>
+            <li>render()</li>
+            <li>componentDidMount()：在reactDOM成为DomNode后触发</li>
+            <li>update</li>
+            <li>shouldComponentUpdate()：return false时reactUpdate不会触发</li>
+            <li>render()</li>
+            <li>componentDidUpdate()：在reactDOM在DomNode中更新后触发</li>
+            <li>Unmount</li>
+            <li>componentWillUnmount</li>
+        </ol>
+        <h3>其他方法</h3>
+        <dl>
+            <dt>setState(updater[,callback]])</dt>
+            <dd>setState({property:value})</dd>
+            <dd>setState可以直接接受一个对象来改变state的值</dd>
+            <dd>setState(function(state,props){return{state.property:value}}</dd>
+            <dd>setState一般以函数为参数，函数返回新的state参数对象；如果需要state参数改变前的值，这个function可以引用state和props作为参数</dd>
+            <dd>setState是异步的，当要使用原有props和states作为计算新state的value时，一定要用函数(箭头函数)方法</dd>
+            <dd>callback是更新state以后的函数，现在更多使用componentDidUpdate</dd>
+            <dt>forceUpdate()</dt>
+        </dl>
+        <h3>组件默认属性</h3>
+        <dl>
+            <dt>defaultProps</dt>
+            <dd>在组件外部定义ComponentName.defaultProps = {property:value}</dd>
+            <dd>如果组件的属性没有被外部数据赋值，那么执行默认赋值</dd>
+            <dt>props</dt>
+            <dd>props是调用者决定的，组件创建者设置props属性接口，供调用者使用</dd>
+            <dd>this.props是所有组件参数属性对象，调用组件时property={}/''=this.props.property</dd>
+            <dt>state</dt>
+            <dd>state是组件创建者决定的，创建者通过lifestyle中state的变化，改变组件在dom中的输出</dd>
+            <dd>使用setState()改变state</dd>
+        </dl>
+    </section>
+</body>
+</html>

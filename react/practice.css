@@ -1,0 +1,55 @@
+.features{
+    display: flex;
+    justify-content: space-between;
+    background-color: gainsboro;
+    padding: 1rem;
+}
+.card{
+    width: 24%;
+    border: 1px solid grey;
+    background-color: #fff;
+}
+.card .card_head{
+    padding: 0.5rem 0;
+    text-align: center;
+    color: #fff;
+}
+.card ul {
+    padding: 0;
+    height: 8rem;
+}
+.card ul,.select{
+    width: 80%;
+    margin: 1rem auto;
+}
+.select{
+    text-align: center;
+    padding: 0.5rem;
+    border:1px solid #1f8ac6;
+    background-color: #fff;
+    color: #1f8ac6;
+}
+.clock_container{
+    width: 30%;
+    background-color: red;
+    font-size: 2rem;
+}
+.date_container{
+    text-align: center;
+    color: white;
+    padding: 0.5rem;
+}
+.time_container{
+    display: flex;
+    justify-content: space-around;
+    background-color: yellow;
+    padding: 5rem ;
+}
+.time_container > div{
+    padding: 1rem;
+}
+.box{
+    background-color: white;
+    color: red;
+    text-align: center;
+}
