@@ -23,6 +23,6 @@ request.onreadystatechange = ()=>{
     }
 }
 //7.request.open(),初始化请求，定义请求模式，目标等等
-request.open('GET','/api/categories');
+request.open('GET','http://api.money.126.net/data/feed/0000001,1399001?callback=refreshPrice');
 //8.request.send()发送请求
 request.send()
