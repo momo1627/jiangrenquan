@@ -79,20 +79,52 @@
 // run(gen);
 
 //co 模块 自动执行generator模块，不再需要编写执行器和thunk函数
+//co 模块要求 generatoryield 表达式只能是thunk函数或promise对象
+//如果数组或对象的成员全部都是promise，也可以使用co
 //co函数传入一个生成器，返回一个promise对象，用then添加回调函数
 var fs = require('fs');
-var thunkify = require('thunkify');
-var readFileThunk = thunkify(fs.readFile);
+var readFile = function(filename){
+    return new Promise((resolve,reject)=>{
+        fs.readFile(filename,(error,data)=>{
+            if(error) return reject(error);
+            resolve(data);
+        })
+    })
+}
 var gen = function* (){
-    var r1 = yield readFileThunk('1.txt');
+    var r1 = yield readFile('1.txt');
     console.log(r1.toString());
-    var r2 = yield readFileThunk('2.txt');
+    var r2 = yield readFile('2.txt');
     console.log(r2.toString())
 }
-var co = require('co');
-co(gen).then(
-    ()=>{
-        console.log('生成器完成')
+// var g = gen();
+// g.next().value.then((data)=>{
+//     console.log('生成器第一步完成')
+//     g.next(data).value.then((data)=>{
+//         g.next(data)
+//         console.log('生成器完成')
+//     });
+// });
+//实质执行器就是执行next()返回的第一个promise对象，
+//然后promise对象的then方法将data作为next()参数传回生成器，并再次生成新的promise
+//不断回调执行到生成器done，所以写出一个自动执行器
+function run(fn){
+    var gen = fn();
+    function next(data){
+        var result = gen.next(data);
+        if(result.done) return result.value;
+        //promise.then调用next(data)恢复生成器
+        result.value.then((data)=>{
+            next(data)
+        });
     }
-);
+    next();
+}
+run(gen);
+// var co = require('co');
+// co(gen).then(
+//     ()=>{
+//         console.log('生成器完成')
+//     }
+// );
 
