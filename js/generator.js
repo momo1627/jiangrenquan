@@ -154,9 +154,9 @@
 //11.generator与上下文（运行环境）
 //generator函数一旦遇到yield命名会暂时退出堆栈，但是并不消失，对象和变量会冻结当前状态，等next命令执行时，他的上下文环境重新加入调用栈，变量和对象恢复执行
 //普通函数执行遇到return时，执行长即完成，上下文环境消失，generator遇到return也一样
-// function* gen(){
-//     yield 1;
-//     return 2;
-// }
-// let g = gen();
-// console.log(g.next().value,g.next().value,g.next().value)
+function* gen(){
+    yield 1;
+    return 2;
+}
+let g = gen();
+console.log(g.next().value,g.next().value,g.next().value)
