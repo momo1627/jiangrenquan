@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<style>
+    .command{
+        color:red;
+        font-size:2rem;
+    }
+    .result{
+        color:blue;
+        font-size:1.5rem;
+    }
+    
+    </style>
+<body>
+    <div>
+        <form action="
+        ">
+    <p>hahah</p></form>
+    </div>
+    <section>
+        <h3>version control</h3>
+        <dl>
+            <dt>version log</dt>
+            <dd class="command">git log/git relog</dd>
+            <dd class='result'>check commit log and version ID</dd>
+            <dt>commit version</dt>
+            <dd class="command">git reset --hard version ID</dd>
+            <dd class='result'>to go back or forward a committed version</dd>
+            <dd class='command'>git reset HEAD filename</dd>
+            <dd class='result'>to setback content from repo to stage</dd>
+            <dt>reverse changes</dt>
+            <dd class="command">git checkout -- file</dd>
+            <dd class='result'>clear changes in working directory</dd>
+            <dd>set back to last stage or repo(added or committed)</dd>
+        </dl>
+    </section>
+    <section>
+        <h3>origin repo</h3>
+        <dl>
+            <dt>push local repo and link to an origin repo</dt>
+            <dd>create an origin repo without readme</dd>
+            <dd>git remote add origin git@github.com:username/git</dd>
+            <dd>git push -u origin master</dd>
+            <dt>clone an origin repo to local</dt>
+            <dd>create an origin repo with initial readme</dd>
+            <dd>select local workplace</dd>
+            <dd>git clone git@github.com:username/xx.git</dd>
+        </dl>
+    </section>
+    <section>
+        <h3>branch</h3>
+        <dl>
+            <dt>create and merge/delete branch</dt>
+            <dd class="command">git checkout -b name = git branch name/git checkout name</dd>
+            <dt>merge dev content</dt>
+            <dd class="command">git merge devname</dd>
+            <dd class='result'>merge devname branch content to current branch</dd>
+            <dd class="command">git branch -d name : delete branch</dd>
+            <dt>fix conflicks</dt>
+            <dd class="command">git merge --no-ff -m 'message' name</dd>
+            <dd>merge but not delete branch</dd>
+        </dl>
+    </section>
+</body>
+</html>
