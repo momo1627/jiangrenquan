@@ -103,20 +103,20 @@
 //6.1 try...catch处理await 错误
 //6.2 多个await的异步操作，如果不存在继发关系，最好同时触发
 //继发关系写法，前一个异步完成，再执行后一个异步，影响效率
-let foo = await getFoo();
-let bar = await getBar();
+// let foo = await getFoo();
+// let bar = await getBar();
 //同时执行写法；Promise.all()
 //1
-let [foo,bar] = await Promise.all([getFoo(),getBar()])
+// let [foo,bar] = await Promise.all([getFoo(),getBar()])
 //2
-let fooPromise = getFoo();let barPromise = getBar();
-let foo = await fooPromise; let bar = await barPromise;
+// let fooPromise = getFoo();let barPromise = getBar();
+// let foo = await fooPromise; let bar = await barPromise;
 //6.3 await 只能用在async函数里(yield只能用在generator里)
 //6.4 async函数可以保留运行栈堆
-const a = async()=>{
-    await b();
-    c();
-}
+// const a = async()=>{
+//     await b();
+//     c();
+// }
 //当a函数执行时，b函数异步操作会停止a的执行，如果b，c发生错误，a的上下文仍然保持，a会被加入错误栈；
 //如果a是普通函数，b错误前，a就已经完成，b所在上下文已经消失，a不会被放入错误栈
 
