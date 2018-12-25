@@ -61,6 +61,7 @@
 //     return await 123
 // }
 // f().then(console.log)
+//4.0 await promise 得到的结果 是promise对象resolve方法的处理的结果，也就是参数
 //4.1 如果await后是一个thenable对象，即定义then方法的对象，也就是类promise对象，将其等同于promise
 // class Sleep{
 //     constructor(timeout){
@@ -120,5 +121,24 @@
 //当a函数执行时，b函数异步操作会停止a的执行，如果b，c发生错误，a的上下文仍然保持，a会被加入错误栈；
 //如果a是普通函数，b错误前，a就已经完成，b所在上下文已经消失，a不会被放入错误栈
 
-
+//7 异步的并发与继发
+//7.1 在for of代码块中每个循环异步完成后才进行下一个，异步是激发的，依次输出结果
+async function logInOrder(urls){
+    for (const url of urls){
+        const response = await fetch(url);
+        console.log(await response.text());
+    }
+}
+//7.2 在map中作为map参数的async函数，其异步发生在内部，所以map中异步是并发的，没有顺序；
+//得到response结果后，再使用for of 函数循环依次输出
+async function logInOrder(urls){
+    const textPromises = urls.map(async url=>{
+        const response = await fetch(url);
+        return response.text();
+    })
+    for (const textPromise of textPromises){
+        console.log(await textPromise)
+    }
+}
+//7.3 执行await是激发的，async是并发的，其内部是继发的；
 
