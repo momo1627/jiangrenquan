@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <h2>内存</h2>
+        <ul>
+            <li>从概念上讲：内存可以看作是一个可以读写的巨大数组</li>
+            <li>内存中可以储存程序的变量和其他数据，程序代码，包括操作系统代码</li>
+            <li>堆栈空间分配计算好的内存空间给调用程序，当调用程序后，调用程序内存添加在现有内存之上，后进先出原则一处</li>
+            <li></li>
+        </ul>
+        <h2>动态分配内存</h2>
+        <ul>
+            <li>当变量内存不确定时，编译器不知道需要多少内存</li>
+            <li>此时内存是从堆空间分配的</li>
+            <li>动态内存分配在运行时执行，分配给堆，没有特定分配顺序</li>
+            <li>主要与指针相关</li>
+        </ul>
+    </section>
+        <section>
+            <h2>编译器</h2>
+            <ul>
+                <li>编译器检查基本数据类型，并且计算需要多少内存</li>
+                <li>编译器插入与操作代码交互，申请存贮变量所需的堆栈字节数即内存大小</li>
+                <li>编译器知道每个变量的确切内存地址，当我们写入变量时，其在内部就会转化为内存地址信息</li>
+            </ul>
+        </section>
+    <section>
+        <h2>内存的生命周期</h2>
+        <ul>
+            <li>分配内存：操作系统分配内存，高级语言中，系统自动分配内存</li>
+            <li>使用内存：程序使用之前分配的内存，即代码中使用分配的变量，发生读写操作</li>
+            <li>释放内存：释放不再使用的内存，使之成为自由内存再使用，高级语言中也是自动发生的</li>
+        </ul>
+    </section>
+    <section>
+        <h2>js中分配内存</h2>
+    </section>
+</body>
+</html>

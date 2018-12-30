@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <dl>
+        <dt>V8 engine:v8引擎</dt>
+        <dd>js引擎两个主要部件，memory heap和call stack</dd>
+        <dt>memory heap 内存堆</dt>
+        <dd>内存分配地址：即变量值存住内存的位置；知道去哪里调用变量</dd>
+        <dt>call back 调用栈</dt>
+        <dd>js函数运行的地方</dd>
+    </dl>
+    <dl>
+        <dt>Runtime js的运行</dt>
+        <dd>js是单线程编程语言，只有一个call stack</dd>
+        <dt>call stack运行</dt>
+        <dd>每次运行一个新的函数，就在调用栈置顶，后进先出，直到清空调用栈</dd>
+        <dt>call stack追踪异常</dt>
+        <dd>根据程序在调用栈位置从上到下了解堆栈结构，追踪错误</dd>
+        <dt>call stack溢出</dt>
+        <dd>调用栈的程序超过其容纳大小，例如递归函数无法结束，一次又一次添加进堆栈</dd>
+        <dt>call stack阻塞</dt>
+        <dd>在call stack内一次执行一个函数，当一个函数太大时间太长，就会阻塞其他行为</dd>
+    </dl>
+    <dl>
+        <dt>V8引擎特性</dt>
+        <dd>
+            <ul>
+                <li>v8将js代码转换成机器码而不是解释器，更高效</li>
+                <li>不生产字节码或任何中间代码</li>
+                <li>提前内联尽可能多的代码，即提前替换调用函数的代码块到main环境</li>
+                <li>在js使用类时创建隐藏类，同步js类的变化，并且和相同顺序相同结构的对象共享，大大省去了在内存中检索js类的繁琐过程</li>
+                <li>内联缓存，预测未来作为参数传递的对象类型，通过隐藏类查找，大大提高执行速度</li>
+                <li>垃圾收集，增量标记，尝试标记每个可能对象</li>
+            </ul>
+        </dd>
+    </dl>
+    <dl>
+        <dt>如何编写优化的js</dt>
+        <dd>
+            <ul>
+                <li>以相同的顺序实例化对象属性，以便共享隐藏类</li>
+                <li>动态属性，在构造函数中分配所有对象属性，避免实例化后添加属性后强制更改隐藏类</li>
+                <li>解耦，重复执行相同代码比执行一次的多个不同方法更快</li>
+                <li>避免使用大于31位数字</li>
+            </ul>
+        </dd>
+    </dl>
+</body>
+</html>
