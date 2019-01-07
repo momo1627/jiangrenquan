@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <main>
+        <h1>fetch(input[,init])</h1>
+        <h3>概念</h3>
+        <ul>    
+            <li>fetch向服务器发送请求，返回一个promise对象，这个promise对象resolve请求的response</li>
+            <li>返回的promise对象只会reject network error；</li>
+            <li>promise的then()方法必须检查http error例如404，即检查Response.status</li>
+        </ul>
+        <h3>参数</h3>
+        <ul>
+            <li>input：URL/request object</li>
+            <li>init：一个对象，包含request参数：例如method，headers，body等等</li>
+            <li></li>
+        </ul>
+    </main>
+    <section>
+        <h1>fetch api</h1>
+        <dl>
+            <dt>Headers对象</dt>
+            <dd>Headers API用来处理request或response的请求头对象</dd>
+            <dd>新建一个headers对象的实例，供request和response对象使用</dd>
+            <dd>.get()/.append/.delete/.has/.set/.keys/.values/.entries</dd>
+            <dt>Request对象</dt>
+            <dd>Request对象实例，作为fetch()的参数，定义请求的内容和细节</dd>
+            <dd>request属性都是只读，读取request信息。</dd>
+            <dt>Response对象</dt>
+            <dd>Response对象实例，作为fetch()返回promise的resovle参数，是请求得到的返回结果</dd>
+            <dd>response.status/.ok/.header/</dd>
+        </dl>
+    </section>
+</body>
+</html>
