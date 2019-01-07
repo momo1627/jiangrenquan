@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <h3>API</h3>
+        <p>提供一个接口让其他人来使用我们的数据或者应用</p>
+        <h3>URL</h3>
+        <p>URL=https+domain+/path</p>
+        <dl>
+            <dt>HOST:DNS mapping</dt>
+            <dd>DNS给域名的服务器匹配IP地址</dd>
+            <dt>URL path</dt>
+            <dd>
+                <ul>
+                    <li>File source:可能是服务器文件的地址</li>
+                    <li>structure：可能是服务器会根据我们的request返回指定的内容</li>
+                    <li>technology：php,asp服务器表明后端基础技术</li>
+                </ul>
+            </dd>
+            <dt>?name=value</dt>
+            <dd>Query String:api的键值查询</dd>
+            <dt>#selectorname</dt>
+            <dd>定位页面的某个元素</dd>
+        </dl>
+    </section>
+    <section>
+        <h3>Request/response</h3>
+        <ul>
+            <li>method/url/version</li>
+            <li>headers</li>
+            <li>body</li>
+        </ul>W
+    </section>
+    <section>
+        <h3>Soap</h3>
+        <p>url根据operation定义，一般使用动词</p>
+        <p>stateless，跟之前动作没联系</p>
+        <h3>Restful API</h3>
+        <p>url根据source定义，一般使用名词</p>
+        <p>stateful，跟之前的动作有联系</p>
+    </section>
+    <section>
+        <h3>Rest API</h3>
+        <p>一个URL返回的是客户端可以直接使用的数据，提供操作数据的接口，从而分隔客户端和服务端</p>
+        <p>网页成为客户端，通过javascript直接处理api传来的数据</p>
+        <p>REST请求仍然是HTTP请求，但是传输的数据是JSON格式</p>
+    </section>
+</body>
+</html>
